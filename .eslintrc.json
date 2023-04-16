@@ -1,0 +1,27 @@
+{
+  "env": {
+    "browser": true,
+    "commonjs": true,
+    "es2021": true
+  },
+  "extends": ["airbnb-base", "prettier"],
+  "overrides": [],
+  "parserOptions": {
+    "ecmaVersion": "latest"
+  },
+  "rules": {
+    "no-use-before-define": ["error", { "functions": false }],
+
+    "quotes": ["error", "single"],
+
+    "no-param-reassign": ["error", { "props": false }],
+
+    "no-plusplus": ["error", { "allowForLoopAfterthoughts": true }],
+
+    "func-names": ["error", "never"],
+
+    "prefer-destructuring": ["error", { "object": true, "array": false }],
+
+    "no-unused-expressions": ["error", { "allowTernary": true }]
+  }
+}
