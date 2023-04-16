@@ -291,9 +291,7 @@ const displayControllerModule = (function () {
   const playerContainer2 = createPlayerInfoElements(game.players[1]);
 
   createRestartButton();
-
   createEndGamePopup();
-
   showTurn();
 
   //  create board cells in DOM
@@ -349,9 +347,11 @@ const displayControllerModule = (function () {
         toggleIcon.setAttribute('class', 'fa-regular fa-user');
         toggleAiOrPlayer(0, 1);
         computerTurn();
+        showTurn();
       } else if (e.target.closest('[data-player="2"]')) {
         toggleAiOrPlayer(1, 0);
         computerTurn();
+        showTurn();
       }
     });
 
@@ -369,6 +369,9 @@ const displayControllerModule = (function () {
       resetCellElements();
       updateScoreDisplay();
       showTurn(true);
+      if (game.getActivePlayer().getIsComputer() === true) {
+        computerTurn();
+      }
     });
   }
 
@@ -394,6 +397,7 @@ const displayControllerModule = (function () {
     });
   }
 
+  // toggle between player and ai when clicked and update the ui to indicate the change
   function toggleAiOrPlayer(playerNum, otherPlayerNum) {
     game.togglePlayerOrComputer(playerNum, otherPlayerNum);
     const playerName = document.querySelector(`.player${playerNum + 1}-name`);
@@ -402,8 +406,10 @@ const displayControllerModule = (function () {
     otherPlayerName.textContent = game.players[otherPlayerNum].getPlayerName();
 
     const toggleIcon = document.querySelector(`[data-player='${playerNum + 1}'] i`);
+    const otherToggleIcon = document.querySelector(`[data-player='${otherPlayerNum + 1}'] i`);
     if (game.players[playerNum].getIsComputer() === true) {
       toggleIcon.setAttribute('class', 'fa-solid fa-computer');
+      otherToggleIcon.setAttribute('class', 'fa-regular fa-user');
     } else {
       toggleIcon.setAttribute('class', 'fa-regular fa-user');
     }
@@ -411,6 +417,7 @@ const displayControllerModule = (function () {
     resetCellElements();
   }
 
+  // show the game result as a popup window
   function showEndGamePopup() {
     document.querySelector('.backdrop').style.visibility = 'visible';
     const endMessage = document.querySelector('.message');
@@ -424,12 +431,14 @@ const displayControllerModule = (function () {
     playerScores[1].textContent = game.players[1].getPlayerScore();
   }
 
+  // reset the cell content on ui
   function resetCellElements() {
     cellElements.forEach((cell) => {
       cell.textContent = '';
     });
   }
 
+  // give a visual indication on whose turn it is
   function showTurn(reset) {
     if (game.getActivePlayer().getPlayerNumber() === 1 || reset === true) {
       playerContainer2.setAttribute('style', 'filter:saturate(0.8) brightness(0.5);');
@@ -440,6 +449,7 @@ const displayControllerModule = (function () {
     }
   }
 
+  // click callback function when player name is clicked
   function clickEditName(player, nameDisplay) {
     const newName = prompt('Enter A New Name(maximum 10 characters)');
     if (newName != null && newName.length <= 10) {
@@ -448,6 +458,7 @@ const displayControllerModule = (function () {
     }
   }
 
+  // click the end game message to enter the next turn
   function clickToNextRound(overlay, message) {
     gameBoard.resetBoard();
     game.resetTie();
@@ -502,7 +513,7 @@ const displayControllerModule = (function () {
 
     if (game.getActivePlayer().getIsComputer() === true) {
       isComputerTurn = true;
-      setTimeout(computerTurn, 500);
+      setTimeout(computerTurn, 300);
     }
   }
 
@@ -544,5 +555,3 @@ const displayControllerModule = (function () {
     }
   }
 })();
-
-//displayControllerModule.createCellElements();

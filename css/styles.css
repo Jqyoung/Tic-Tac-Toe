@@ -190,7 +190,7 @@ div[data-player='2'] i {
   left: 0;
   right: 0;
   z-index: 999;
-  background-color: rgba(179, 179, 179, 0.7);
+  background-color: rgba(36, 36, 36, 0.8);
   visibility: hidden;
   display: flex;
   justify-content: center;
