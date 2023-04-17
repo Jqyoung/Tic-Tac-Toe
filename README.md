@@ -19,3 +19,4 @@ A web-based Tic-Tac-Toe game with a Matrix movie inspired theme. Choose to play 
 - Write a flowchart and better pseudocode before the actual coding.
 - Get rid of some of the repetitive code by refactoring them into reusable functions or modules.
 - Make the AI intelligent.
+- Make the website responsive.
